@@ -46,11 +46,36 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserDto update(UserDto updateUserDto, Long id) {
     return userRepository.findById(id).map(userInDB -> {
+      if (updateUserDto.getUserName() != null) {
+        userInDB.setUserName(updateUserDto.getUserName());
+      }
+      if (updateUserDto.getUserLastName() != null) {
+        userInDB.setUserLastName(updateUserDto.getUserLastName());
+      }
+      if (updateUserDto.getGender() != null) {
+        userInDB.setGender(updateUserDto.getGender());
+      }
+      if (updateUserDto.getDateOfBirth() != null) {
+        userInDB.setDateOfBirth(updateUserDto.getDateOfBirth());
+      }
       if (updateUserDto.getPassword() != null) {
         userInDB.setPassword(updateUserDto.getPassword());
       }
       if (updateUserDto.getEmail() != null) {
         userInDB.setEmail(updateUserDto.getEmail());
+      }
+
+      if (updateUserDto.getCity() != null) {
+        userInDB.setCity(updateUserDto.getCity());
+      }
+      if (updateUserDto.getSnapshot() != null) {
+        userInDB.setSnapshot(updateUserDto.getSnapshot());
+      }
+      if (updateUserDto.getDescription() != null) {
+        userInDB.setDescription(updateUserDto.getDescription());
+      }
+      if (updateUserDto.getStatus() != null) {
+        userInDB.setStatus(updateUserDto.getStatus());
       }
       return userMapper.entityToDto(userRepository.saveAndFlush(userInDB));
     }).orElseThrow(() -> new NotFoundException(User.class.getSimpleName()));

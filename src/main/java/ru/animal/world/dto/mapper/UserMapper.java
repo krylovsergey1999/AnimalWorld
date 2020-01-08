@@ -3,27 +3,23 @@ package ru.animal.world.dto.mapper;
 import ru.animal.world.dto.UserDto;
 import ru.animal.world.entity.User;
 
-public class UserMapper {
+public class UserMapper implements Mapper<UserDto, User> {
 
-  public static UserDto entityUserToDto(User user) {
+  @Override
+  public UserDto entityToDto(User user) {
     return UserDto.builder()
         .userId(user.getUserId())
-        .userName(user.getUserName())
-        .userLastName(user.getUserLastName())
+        .password(user.getPassword())
         .email(user.getEmail())
-        .created_on(user.getCreated_on())
-        .lastLogin(user.getLastLogin())
         .build();
   }
 
-  public static User userDtoToEntity(UserDto userDto) {
+  @Override
+  public User dtoToEntity(UserDto userDto) {
     return User.builder()
         .userId(userDto.getUserId())
-        .userName(userDto.getUserName())
-        .userLastName(userDto.getUserLastName())
+        .password(userDto.getPassword())
         .email(userDto.getEmail())
-        .created_on(userDto.getCreated_on())
-        .lastLogin(userDto.getLastLogin())
         .build();
   }
 }

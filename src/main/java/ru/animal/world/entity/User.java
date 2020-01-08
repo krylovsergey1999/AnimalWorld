@@ -1,6 +1,5 @@
 package ru.animal.world.entity;
 
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,21 +23,9 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long userId;
 
-  @Column(name = "user_name", nullable = false)
-  private String userName;
-
-  @Column(name = "user_last_name", nullable = false)
-  private String userLastName;
-
   @Column(name = "password", nullable = false)
   private String password;
 
   @Column(name = "email", nullable = false, unique = true)
   private String email;
-
-  @Column(name = "created_on", nullable = false)
-  private Date created_on;
-
-  @Column(name = "last_login")
-  private Date lastLogin;
 }

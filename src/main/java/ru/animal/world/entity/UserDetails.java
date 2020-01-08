@@ -1,5 +1,6 @@
 package ru.animal.world.entity;
 
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,15 +15,24 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @Entity
-@Table(name = "comment")
+@Table(name = "user_details")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comment {
+public class UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long commentId;
+  private Long userDetailsId;
 
-  @Column(name = "comment_text", nullable = false)
-  private String commentText;
+  @Column(name = "user_name", nullable = false)
+  private String userName;
+
+  @Column(name = "user_last_name", nullable = false)
+  private String userLastName;
+
+  @Column(name = "created_on", nullable = false)
+  private LocalDateTime created_on;
+
+  @Column(name = "last_login")
+  private LocalDateTime lastLogin;
 }

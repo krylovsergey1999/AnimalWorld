@@ -3,6 +3,7 @@ package ru.animal.world.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -64,6 +65,9 @@ public class User implements Serializable {
   @Column(name = "last_login")
   private LocalDateTime lastLogin;
 
-  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+  private Set<Note> notes;
+
+  @ManyToMany(mappedBy = "users")
   private List<Dialog> dialogs;
 }

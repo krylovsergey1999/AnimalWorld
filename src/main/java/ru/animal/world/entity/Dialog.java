@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -25,6 +26,14 @@ public class Dialog implements Serializable {
   @Column(name = "text_body")
   private String textBody;
 
-  @ManyToMany(mappedBy = "dialogs", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "dialog", fetch = FetchType.EAGER)
+  private Set<Message> messages;
+
+  @ManyToMany()
+  @JoinTable(
+          name = "user_dialog",
+          joinColumns = { @JoinColumn(name = "dialog_id") },
+          inverseJoinColumns = { @JoinColumn(name = "user_id") }
+  )
   private User users;
 }

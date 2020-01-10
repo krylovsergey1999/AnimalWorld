@@ -27,7 +27,7 @@ public class Comment {
   @Column(name = "comment_time", nullable = false)
   private LocalDateTime commentTime;
 
-  @ManyToOne
-  @Column(name = "note")
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "comments")
   private Note note;
 }

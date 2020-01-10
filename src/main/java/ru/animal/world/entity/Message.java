@@ -27,7 +27,7 @@ public class Message {
   @Column(name = "message_time", nullable = false)
   private LocalDateTime messageTime;
 
-  @ManyToOne
-  @Column(name = "dialog")
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "messages")
   private Dialog dialog;
 }

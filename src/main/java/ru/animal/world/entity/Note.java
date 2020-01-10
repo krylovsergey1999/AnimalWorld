@@ -32,11 +32,19 @@ public class Note implements Serializable {
   @Column(nullable = false)
   private LocalDateTime createDate;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id")
+  @OneToMany(mappedBy = "note", fetch = FetchType.EAGER)
+  private Set<Comment> comments;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "notes")
   private User author;
 
-  @ManyToMany(mappedBy = "notes", fetch = FetchType.EAGER)
+  @ManyToMany()
+  @JoinTable(
+          name = "Animal_note",
+          joinColumns = { @JoinColumn(name = "note_id") },
+          inverseJoinColumns = { @JoinColumn(name = "animal_id") }
+  )
   private Set<Animal> animals;
 
 }

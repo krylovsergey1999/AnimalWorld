@@ -29,8 +29,6 @@ public class Animal implements Serializable {
   private String animalName;
 
   @Column(name = "cities")
-  @ElementCollection(targetClass = City.class, fetch = FetchType.LAZY)
-  @CollectionTable(name = "city", joinColumns = @JoinColumn(name = "city_id"))
   @Enumerated(EnumType.STRING)
   private Set<City> cities;
 
@@ -47,6 +45,6 @@ public class Animal implements Serializable {
   @Column(name = "date_of_birth")
   private LocalDateTime dateOfBirth;
 
-  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @ManyToMany(mappedBy = "animals")
   private Set<Note> notes;
 }

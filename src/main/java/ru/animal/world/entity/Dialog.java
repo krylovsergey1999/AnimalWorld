@@ -1,14 +1,14 @@
 package ru.animal.world.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Builder
@@ -16,9 +16,15 @@ import lombok.NoArgsConstructor;
 @Table(name = "dialog")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Dialog {
+public class Dialog implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long diID;
+
+  @Column(name = "text_body")
+  private String textBody;
+
+  @ManyToMany(mappedBy = "dialogs", fetch = FetchType.EAGER)
+  private User users;
 }

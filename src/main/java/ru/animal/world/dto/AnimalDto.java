@@ -11,5 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AnimalDto implements BaseDto {
 
-  private Long animalId;
+    private Long animalId;
+
+    private String animalName;
+
+    public int getFieldsCount() {
+        return this.getClass().getDeclaredFields().length;
+    }
 }

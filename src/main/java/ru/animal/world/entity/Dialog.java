@@ -21,7 +21,7 @@ public class Dialog implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long diID;
+  private Long dialogId;
 
   @Column(name = "text_body")
   private String textBody;
@@ -35,5 +35,5 @@ public class Dialog implements Serializable {
           joinColumns = { @JoinColumn(name = "dialog_id") },
           inverseJoinColumns = { @JoinColumn(name = "user_id") }
   )
-  private User users;
+  private Set<User> users;
 }

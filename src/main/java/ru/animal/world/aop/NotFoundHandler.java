@@ -23,6 +23,7 @@ public class NotFoundHandler extends ResponseEntityExceptionHandler {
                 request.getDescription(false)), HttpStatus.NOT_FOUND);
     }
 
+    //Например для http://localhost:8080/animals/export/pdf , там есть DocumentException, он его обработает.
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
 

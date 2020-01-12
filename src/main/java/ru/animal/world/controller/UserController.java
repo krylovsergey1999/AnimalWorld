@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.animal.world.dto.UserDto;
+import ru.animal.world.exception.NotFoundException;
 import ru.animal.world.service.UserService;
 
 import java.util.Collection;
@@ -34,6 +35,7 @@ public class UserController implements AbstractController<UserDto> {
 
     @Override
     public ResponseEntity<Collection<UserDto>> getAll() {
+        if (userService.getAll().isEmpty()) throw new NotFoundException("Users");
         return ResponseEntity.ok(userService.getAll());
     }
 

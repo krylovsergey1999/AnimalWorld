@@ -1,14 +1,19 @@
-package ru.animal.world.dto.mapper;
+package ru.animal.world.dto.mapper_old;
 
+import java.util.stream.Collectors;
 import ru.animal.world.dto.UserDto;
 import ru.animal.world.entity.User;
 
 public class UserMapper implements Mapper<UserDto, User> {
 
+  NoteMapper noteMapper = new NoteMapper();
+  DialogMapper dialogMapper = new DialogMapper();
+  AnimalMapper animalMapper = new AnimalMapper();
+
   @Override
   public UserDto entityToDto(User user) {
     return UserDto.builder()
-        .userId(user.getUserId())
+        .id(user.getId())
         .userName(user.getUserName())
         .userLastName(user.getUserLastName())
         .gender(user.getGender())
@@ -21,13 +26,22 @@ public class UserMapper implements Mapper<UserDto, User> {
         .status(user.getStatus())
         .createdOn(user.getCreatedOn())
         .lastLogin(user.getLastLogin())
+        .notes(user.getNotes()
+            .stream().map(note -> noteMapper.entityToDto(note))
+            .collect(Collectors.toSet()))
+        .dialogs(user.getDialogs()
+            .stream().map(dialog -> dialogMapper.entityToDto(dialog))
+            .collect(Collectors.toList()))
+        .animals(user.getAnimals()
+            .stream().map(animal -> animalMapper.entityToDto(animal))
+            .collect(Collectors.toSet()))
         .build();
   }
 
   @Override
   public User dtoToEntity(UserDto userDto) {
     return User.builder()
-        .userId(userDto.getUserId())
+        .id(userDto.getId())
         .userName(userDto.getUserName())
         .userLastName(userDto.getUserLastName())
         .gender(userDto.getGender())
@@ -40,6 +54,15 @@ public class UserMapper implements Mapper<UserDto, User> {
         .status(userDto.getStatus())
         .createdOn(userDto.getCreatedOn())
         .lastLogin(userDto.getLastLogin())
+        .notes(userDto.getNotes()
+            .stream().map(noteDto -> noteMapper.dtoToEntity(noteDto))
+            .collect(Collectors.toSet()))
+        .dialogs(userDto.getDialogs()
+            .stream().map(dialogDto -> dialogMapper.dtoToEntity(dialogDto))
+            .collect(Collectors.toList()))
+        .animals(userDto.getAnimals()
+            .stream().map(animalDto -> animalMapper.dtoToEntity(animalDto))
+            .collect(Collectors.toSet()))
         .build();
   }
 }

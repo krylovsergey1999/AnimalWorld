@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.animal.world.dto.AnimalDto;
-import ru.animal.world.dto.mapper.AnimalMapper;
-import ru.animal.world.dto.mapper.Mapper;
 import ru.animal.world.entity.Animal;
 import ru.animal.world.exception.NotFoundException;
 import ru.animal.world.repository.AnimalRepository;
@@ -17,7 +15,8 @@ import ru.animal.world.service.AnimalService;
 public class AnimalServiceImpl implements AnimalService {
 
   private final AnimalRepository animalRepository;
-  private Mapper<AnimalDto, Animal> animalMapper = new AnimalMapper();
+  //  private Mapper<AnimalDto, Animal> animalMapper = new AnimalMapper();
+  private ru.animal.world.mapper.AnimalMapper animalMapper = new ru.animal.world.mapper.AnimalMapper();
 
   @Autowired
   public AnimalServiceImpl(AnimalRepository AnimalRepository) {
@@ -45,10 +44,11 @@ public class AnimalServiceImpl implements AnimalService {
 
   @Override
   public AnimalDto update(AnimalDto updateAnimalDto, Long id) {
-    return animalRepository.findById(id).map(AnimalInDB -> {
-      // Todo после обновления всех сущностей
-      return animalMapper.entityToDto(animalRepository.saveAndFlush(AnimalInDB));
-    }).orElseThrow(() -> new NotFoundException(Animal.class.getSimpleName()));
+    Animal animal = animalRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException(Animal.class.getSimpleName()));
+    animal = animalMapper.dtoToEntity(updateAnimalDto);
+    animal.setId(id);
+    return animalMapper.entityToDto(animalRepository.saveAndFlush(animal));
   }
 
   @Override

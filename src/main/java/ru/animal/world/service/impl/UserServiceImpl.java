@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.animal.world.dto.UserDto;
-import ru.animal.world.dto.mapper.Mapper;
-import ru.animal.world.dto.mapper.UserMapper;
 import ru.animal.world.entity.User;
 import ru.animal.world.exception.NotFoundException;
 import ru.animal.world.repository.UserRepository;
@@ -17,7 +15,8 @@ import ru.animal.world.service.UserService;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
-  private Mapper<UserDto, User> userMapper = new UserMapper();
+  //  private Mapper<UserDto, User> userMapper = new UserMapper();
+  private ru.animal.world.mapper.UserMapper userMapper = new ru.animal.world.mapper.UserMapper();
 
   @Autowired
   public UserServiceImpl(UserRepository userRepository) {
@@ -45,44 +44,10 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDto update(UserDto updateUserDto, Long id) {
-    return userRepository.findById(id).map(userInDB -> {
-      if (updateUserDto.getUserName() != null) {
-        userInDB.setUserName(updateUserDto.getUserName());
-      }
-      if (updateUserDto.getUserLastName() != null) {
-        userInDB.setUserLastName(updateUserDto.getUserLastName());
-      }
-      if (updateUserDto.getGender() != null) {
-        userInDB.setGender(updateUserDto.getGender());
-      }
-      if (updateUserDto.getDateOfBirth() != null) {
-        userInDB.setDateOfBirth(updateUserDto.getDateOfBirth());
-      }
-      if (updateUserDto.getPassword() != null) {
-        userInDB.setPassword(updateUserDto.getPassword());
-      }
-      if (updateUserDto.getEmail() != null) {
-        userInDB.setEmail(updateUserDto.getEmail());
-      }
-
-      if (updateUserDto.getCity() != null) {
-        userInDB.setCity(updateUserDto.getCity());
-      }
-      if (updateUserDto.getSnapshot() != null) {
-        userInDB.setSnapshot(updateUserDto.getSnapshot());
-      }
-      if (updateUserDto.getDescription() != null) {
-        userInDB.setDescription(updateUserDto.getDescription());
-      }
-      if (updateUserDto.getStatus() != null) {
-        userInDB.setStatus(updateUserDto.getStatus());
-      }
-      return userMapper.entityToDto(userRepository.saveAndFlush(userInDB));
-    }).orElseThrow(() -> new NotFoundException(User.class.getSimpleName()));
-
-//    не сделал так (ниже), потому что при обновлении, к примеру только пароля, email в body будет null и выскочит ошибка бд "поле email не может быть null"
-//    updateUserDto.setUserId(id);
-//    return userMapper.entityToDto(userRepository.saveAndFlush(userMapper.dtoToEntity(updateUserDto)));
+    User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException(User.class.getSimpleName()));
+    user = userMapper.dtoToEntity(updateUserDto);
+    user.setId(id);
+    return userMapper.entityToDto(userRepository.saveAndFlush(user));
   }
 
   @Override

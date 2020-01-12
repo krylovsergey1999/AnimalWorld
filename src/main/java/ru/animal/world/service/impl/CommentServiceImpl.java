@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.animal.world.dto.CommentDto;
-import ru.animal.world.dto.mapper.CommentMapper;
-import ru.animal.world.dto.mapper.Mapper;
 import ru.animal.world.entity.Comment;
 import ru.animal.world.exception.NotFoundException;
 import ru.animal.world.repository.CommentRepository;
@@ -17,7 +15,8 @@ import ru.animal.world.service.CommentService;
 public class CommentServiceImpl implements CommentService {
 
   private final CommentRepository commentRepository;
-  private Mapper<CommentDto, Comment> commentMapper = new CommentMapper();
+  //  private Mapper<CommentDto, Comment> commentMapper = new CommentMapper();
+  private ru.animal.world.mapper.CommentMapper commentMapper = new ru.animal.world.mapper.CommentMapper();
 
   @Autowired
   public CommentServiceImpl(CommentRepository CommentRepository) {
@@ -45,10 +44,11 @@ public class CommentServiceImpl implements CommentService {
 
   @Override
   public CommentDto update(CommentDto updateCommentDto, Long id) {
-    return commentRepository.findById(id).map(CommentInDB -> {
-      // Todo после обновления всех сущностей
-      return commentMapper.entityToDto(commentRepository.saveAndFlush(CommentInDB));
-    }).orElseThrow(() -> new NotFoundException(Comment.class.getSimpleName()));
+    Comment comment = commentRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException(Comment.class.getSimpleName()));
+    comment = commentMapper.dtoToEntity(updateCommentDto);
+    comment.setId(id);
+    return commentMapper.entityToDto(commentRepository.saveAndFlush(comment));
   }
 
   @Override

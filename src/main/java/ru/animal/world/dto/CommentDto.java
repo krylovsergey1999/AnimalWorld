@@ -1,15 +1,20 @@
 package ru.animal.world.dto;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentDto implements BaseDto {
+public class CommentDto extends BaseDto {
 
-  private Long commentId;
+  private String commentText;
+  private LocalDateTime commentTime;
+  private NoteDto note;
 }

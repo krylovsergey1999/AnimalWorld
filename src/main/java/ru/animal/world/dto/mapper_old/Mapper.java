@@ -1,4 +1,4 @@
-package ru.animal.world.dto.mapper;
+package ru.animal.world.dto.mapper_old;
 
 public interface Mapper<Dto, Entity> {
 

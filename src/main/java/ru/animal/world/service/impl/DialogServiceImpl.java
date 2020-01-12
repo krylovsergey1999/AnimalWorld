@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.animal.world.dto.DialogDto;
-import ru.animal.world.dto.mapper.DialogMapper;
-import ru.animal.world.dto.mapper.Mapper;
 import ru.animal.world.entity.Dialog;
 import ru.animal.world.exception.NotFoundException;
 import ru.animal.world.repository.DialogRepository;
@@ -17,7 +15,8 @@ import ru.animal.world.service.DialogService;
 public class DialogServiceImpl implements DialogService {
 
   private final DialogRepository dialogRepository;
-  private Mapper<DialogDto, Dialog> dialogMapper = new DialogMapper();
+  //  private Mapper<DialogDto, Dialog> dialogMapper = new DialogMapper();
+  private ru.animal.world.mapper.DialogMapper dialogMapper = new ru.animal.world.mapper.DialogMapper();
 
   @Autowired
   public DialogServiceImpl(DialogRepository DialogRepository) {
@@ -45,10 +44,11 @@ public class DialogServiceImpl implements DialogService {
 
   @Override
   public DialogDto update(DialogDto updateDialogDto, Long id) {
-    return dialogRepository.findById(id).map(DialogInDB -> {
-      // Todo после обновления всех сущностей
-      return dialogMapper.entityToDto(dialogRepository.saveAndFlush(DialogInDB));
-    }).orElseThrow(() -> new NotFoundException(Dialog.class.getSimpleName()));
+    Dialog dialog = dialogRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException(Dialog.class.getSimpleName()));
+    dialog = dialogMapper.dtoToEntity(updateDialogDto);
+    dialog.setId(id);
+    return dialogMapper.entityToDto(dialogRepository.saveAndFlush(dialog));
   }
 
   @Override

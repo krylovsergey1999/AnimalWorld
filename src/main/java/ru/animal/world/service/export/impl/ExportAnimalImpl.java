@@ -1,4 +1,4 @@
-package ru.animal.world.service.export;
+package ru.animal.world.service.export.impl;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -6,16 +6,17 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.stereotype.Service;
 import ru.animal.world.dto.AnimalDto;
+import ru.animal.world.service.export.ExportAnimalService;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Collection;
 
 @Service
-public class ExportAnimalPdfServiceImpl implements ExportAnimalPdfService {
+public class ExportAnimalImpl implements ExportAnimalService {
 
     @Override
-    public ByteArrayInputStream generatePdf(Collection<AnimalDto> data) {
+    public ByteArrayInputStream exportToPdf(Collection<AnimalDto> data) {
 
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -33,7 +34,7 @@ public class ExportAnimalPdfServiceImpl implements ExportAnimalPdfService {
             hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(hcell);
 
-            hcell = new PdfPCell(new Phrase("Name", headFont));
+            hcell = new PdfPCell(new Phrase("Animal", headFont));
             hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(hcell);
 
@@ -65,5 +66,20 @@ public class ExportAnimalPdfServiceImpl implements ExportAnimalPdfService {
         }
 
         return new ByteArrayInputStream(out.toByteArray());
+    }
+
+    @Override
+    public ByteArrayInputStream exportToDoc(Collection<AnimalDto> obj) {
+        return null;
+    }
+
+    @Override
+    public ByteArrayInputStream exportToPdf(AnimalDto obj) {
+        return null;
+    }
+
+    @Override
+    public ByteArrayInputStream exportToDoc(AnimalDto obj) {
+        return null;
     }
 }

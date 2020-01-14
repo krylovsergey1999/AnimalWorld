@@ -14,14 +14,14 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.animal.world.exception.NotFoundException;
 
-import java.util.Date;
+import java.time.Instant;
 
 @ControllerAdvice
 public class NotFoundHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     protected ResponseEntity<NotFoundAdvice> userNotFoundHandler(NotFoundException e, WebRequest request) {
-        return new ResponseEntity<>(new NotFoundAdvice(new Date(), e.getMessage() + " not found",
+        return new ResponseEntity<>(new NotFoundAdvice(Instant.now(), e.getMessage() + " not found",
                 request.getDescription(false)), HttpStatus.NOT_FOUND);
     }
 
@@ -29,7 +29,7 @@ public class NotFoundHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
 
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(),
+        ExceptionResponse exceptionResponse = new ExceptionResponse(Instant.now(), ex.getMessage(),
                 request.getDescription(false));
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -38,7 +38,7 @@ public class NotFoundHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<Object> handleMethodArgument(MethodArgumentTypeMismatchException ex, WebRequest request) {
-        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+        ExceptionResponse exceptionResponse = new ExceptionResponse(Instant.now(), ex.getMessage(), request.getDescription(false));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
     }
 
@@ -48,7 +48,7 @@ public class NotFoundHandler extends ResponseEntityExceptionHandler {
                                                                    HttpStatus status, WebRequest request) {
         return new ResponseEntity<>(
                 new ExceptionResponse(
-                        new Date(),
+                        Instant.now(),
                         "Адрес не существует",
                         request.getDescription(false)
                 ),
@@ -61,7 +61,7 @@ public class NotFoundHandler extends ResponseEntityExceptionHandler {
     @AllArgsConstructor
     private static class NotFoundAdvice {
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-        private Date timestamp;
+        private Instant timestamp;
         private String message;
         private String details;
     }
@@ -70,7 +70,7 @@ public class NotFoundHandler extends ResponseEntityExceptionHandler {
     @AllArgsConstructor
     private static class ExceptionResponse {
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-        private Date timestamp;
+        private Instant timestamp;
         private String message;
         private String details;
     }

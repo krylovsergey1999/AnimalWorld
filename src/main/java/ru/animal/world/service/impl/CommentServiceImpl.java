@@ -24,6 +24,7 @@ public class CommentServiceImpl implements CommentService {
     this.commentMapper = mapper;
   }
 
+  // TODO
   @Override
   public CommentDto create(CommentDto newCommentDto) {
     Comment result = commentRepository.save(commentMapper.dtoToEntity(newCommentDto));
@@ -43,6 +44,7 @@ public class CommentServiceImpl implements CommentService {
         .collect(Collectors.toList());
   }
 
+  // TODO
   @Override
   public CommentDto update(CommentDto updateCommentDto, Long id) {
     Comment comment = commentRepository.findById(id)

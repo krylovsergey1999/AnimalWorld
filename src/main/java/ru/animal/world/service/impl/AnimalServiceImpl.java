@@ -57,6 +57,9 @@ public class AnimalServiceImpl implements AnimalService {
   public AnimalDto update(AnimalDto updateAnimalDto, Long id) {
     Animal animal = animalRepository.findById(id)
         .orElseThrow(() -> new NotFoundException(Animal.class.getSimpleName()));
+    if (updateAnimalDto.getUserId() == null) {
+      updateAnimalDto.setUserId(animal.getUsersAnimal().getId());
+    }
     animal = animalMapper.dtoToEntity(updateAnimalDto);
     animal.setId(id);
     return animalMapper.entityToDto(animalRepository.saveAndFlush(animal));

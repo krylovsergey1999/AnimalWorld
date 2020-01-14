@@ -24,6 +24,7 @@ public class MessageServiceImpl implements MessageService {
     this.messageMapper = mapper;
   }
 
+  // TODO
   @Override
   public MessageDto create(MessageDto newMessageDto) {
     Message result = messageRepository.save(messageMapper.dtoToEntity(newMessageDto));
@@ -43,6 +44,7 @@ public class MessageServiceImpl implements MessageService {
         .collect(Collectors.toList());
   }
 
+  // TODO
   @Override
   public MessageDto update(MessageDto updateMessageDto, Long id) {
     Message message = messageRepository.findById(id)

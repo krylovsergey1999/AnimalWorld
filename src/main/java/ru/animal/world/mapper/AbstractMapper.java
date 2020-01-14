@@ -56,6 +56,6 @@ public abstract class AbstractMapper<Entity extends BaseEntity, Dto extends Base
   void mapSpecificFields(Entity source, Dto destination) {
   }
 
-  void mapSpecificFields(Dto destination, Entity source) {
+  void mapSpecificFields(Dto source, Entity destination) {
   }
 }

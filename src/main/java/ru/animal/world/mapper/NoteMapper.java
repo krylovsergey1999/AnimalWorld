@@ -7,13 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.animal.world.dto.NoteDto;
 import ru.animal.world.entity.Note;
+import ru.animal.world.repository.UserRepository;
 
 @Component
 public class NoteMapper extends AbstractMapper<Note, NoteDto> {
 
+  private UserRepository userRepository;
+
   @Autowired
-  public NoteMapper(ModelMapper mapper) {
+  public NoteMapper(ModelMapper mapper, UserRepository userRepository) {
     super(Note.class, NoteDto.class, mapper);
+    this.userRepository = userRepository;
   }
 
   @PostConstruct
@@ -31,5 +35,10 @@ public class NoteMapper extends AbstractMapper<Note, NoteDto> {
 
   private Long getId(Note source) {
     return Objects.isNull(source) || Objects.isNull(source.getId()) ? null : source.getAuthorNote().getId();
+  }
+
+  @Override
+  void mapSpecificFields(NoteDto source, Note destination) {
+    destination.setAuthorNote(userRepository.findById(source.getAuthorId()).orElse(null));
   }
 }

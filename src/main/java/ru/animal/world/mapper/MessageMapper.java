@@ -7,13 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.animal.world.dto.MessageDto;
 import ru.animal.world.entity.Message;
+import ru.animal.world.repository.DialogRepository;
 
 @Component
 public class MessageMapper extends AbstractMapper<Message, MessageDto> {
 
+  private DialogRepository dialogRepository;
+
   @Autowired
-  public MessageMapper(ModelMapper mapper) {
+  public MessageMapper(ModelMapper mapper, DialogRepository dialogRepository) {
     super(Message.class, MessageDto.class, mapper);
+    this.dialogRepository = dialogRepository;
   }
 
   @PostConstruct
@@ -31,5 +35,10 @@ public class MessageMapper extends AbstractMapper<Message, MessageDto> {
 
   private Long getId(Message source) {
     return Objects.isNull(source) || Objects.isNull(source.getId()) ? null : source.getDialog().getId();
+  }
+
+  @Override
+  void mapSpecificFields(MessageDto source, Message destination) {
+    destination.setDialog(dialogRepository.findById(source.getDialogId()).orElse(null));
   }
 }

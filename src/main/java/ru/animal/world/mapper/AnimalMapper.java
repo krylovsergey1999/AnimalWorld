@@ -7,13 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.animal.world.dto.AnimalDto;
 import ru.animal.world.entity.Animal;
+import ru.animal.world.repository.UserRepository;
 
 @Component
 public class AnimalMapper extends AbstractMapper<Animal, AnimalDto> {
 
+  private UserRepository userRepository;
+
   @Autowired
-  public AnimalMapper(ModelMapper mapper) {
+  public AnimalMapper(ModelMapper mapper, UserRepository userRepository) {
     super(Animal.class, AnimalDto.class, mapper);
+    this.userRepository = userRepository;
   }
 
   @PostConstruct
@@ -31,5 +35,10 @@ public class AnimalMapper extends AbstractMapper<Animal, AnimalDto> {
 
   private Long getId(Animal source) {
     return Objects.isNull(source) || Objects.isNull(source.getId()) ? null : source.getUsersAnimal().getId();
+  }
+
+  @Override
+  void mapSpecificFields(AnimalDto source, Animal destination) {
+    destination.setUsersAnimal(userRepository.findById(source.getUserId()).orElse(null));
   }
 }

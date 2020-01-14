@@ -60,7 +60,7 @@ public class NotFoundHandler extends ResponseEntityExceptionHandler {
     @Data
     @AllArgsConstructor
     private static class NotFoundAdvice {
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
         private Instant timestamp;
         private String message;
         private String details;
@@ -69,7 +69,7 @@ public class NotFoundHandler extends ResponseEntityExceptionHandler {
     @Data
     @AllArgsConstructor
     private static class ExceptionResponse {
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "UTC")
         private Instant timestamp;
         private String message;
         private String details;

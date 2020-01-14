@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.animal.world.dto.CommentDto;
 import ru.animal.world.entity.Comment;
 import ru.animal.world.exception.NotFoundException;
+import ru.animal.world.mapper.CommentMapper;
 import ru.animal.world.repository.CommentRepository;
 import ru.animal.world.service.CommentService;
 
@@ -15,12 +16,12 @@ import ru.animal.world.service.CommentService;
 public class CommentServiceImpl implements CommentService {
 
   private final CommentRepository commentRepository;
-  //  private Mapper<CommentDto, Comment> commentMapper = new CommentMapper();
-  private ru.animal.world.mapper.CommentMapper commentMapper = new ru.animal.world.mapper.CommentMapper();
+  private CommentMapper commentMapper;
 
   @Autowired
-  public CommentServiceImpl(CommentRepository CommentRepository) {
-    this.commentRepository = CommentRepository;
+  public CommentServiceImpl(CommentRepository commentRepository, CommentMapper mapper) {
+    this.commentRepository = commentRepository;
+    this.commentMapper = mapper;
   }
 
   @Override

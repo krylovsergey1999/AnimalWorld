@@ -19,8 +19,8 @@ public class NoteDto extends BaseDto {
   private String description;
   private LocalDateTime createDate;
   private Set<CommentDto> comments;
-  private UserDto author_note;
-  private Set<AnimalDto> animals_note;
+  private Long authorId;
+  private Set<AnimalDto> animalsNote;
 
   public NoteDto(String noteName, String description, LocalDateTime createDate) {
     this.noteName = noteName;

@@ -1,5 +1,6 @@
 package ru.animal.world.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ru.animal.world.dto.UserDto;
 import ru.animal.world.entity.User;
 import ru.animal.world.exception.NotFoundException;
+import ru.animal.world.mapper.UserMapper;
 import ru.animal.world.repository.UserRepository;
 import ru.animal.world.service.UserService;
 
@@ -15,16 +17,17 @@ import ru.animal.world.service.UserService;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository userRepository;
-  //  private Mapper<UserDto, User> userMapper = new UserMapper();
-  private ru.animal.world.mapper.UserMapper userMapper = new ru.animal.world.mapper.UserMapper();
+  private UserMapper userMapper;
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository) {
+  public UserServiceImpl(UserRepository userRepository, UserMapper mapper) {
     this.userRepository = userRepository;
+    this.userMapper = mapper;
   }
 
   @Override
   public UserDto create(UserDto newUserDto) {
+    newUserDto.setCreatedOn(LocalDateTime.now());
     User result = userRepository.save(userMapper.dtoToEntity(newUserDto));
     return userMapper.entityToDto(result);
   }

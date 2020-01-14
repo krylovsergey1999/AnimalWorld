@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface AbstractController<DTO> {
 
-  @PostMapping
+  @PostMapping("/create")
   ResponseEntity<DTO> create(@RequestBody DTO newInstanceRequest);
 
   @GetMapping("/{id}")

@@ -37,7 +37,8 @@ public class Dialog extends BaseEntity implements Serializable {
       joinColumns = {@JoinColumn(name = "dialog_id")},
       inverseJoinColumns = {@JoinColumn(name = "user_id")}
   )
-  private Set<User> users_dialog;
+  @EqualsAndHashCode.Exclude
+  private Set<User> usersDialog;
 
   public Dialog(Long id, String textBody) {
     this.id = id;

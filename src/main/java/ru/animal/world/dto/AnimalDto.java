@@ -23,8 +23,8 @@ public class AnimalDto extends BaseDto {
   private String description;
   private Gender gender;
   private LocalDateTime dateOfBirth;
-  private Set<NoteDto> notes_animal;
-  private UserDto users_animal;
+  private Set<NoteDto> notesAnimal;
+  private Long userId;
 
   public AnimalDto(String animalName, City city, String snapshot, String description, Gender gender,
       LocalDateTime dateOfBirth) {

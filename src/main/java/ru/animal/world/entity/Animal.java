@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -53,12 +54,13 @@ public class Animal extends BaseEntity implements Serializable {
   @Column(name = "date_of_birth")
   private LocalDateTime dateOfBirth;
 
-  @ManyToMany(mappedBy = "animals_note")
-  private Set<Note> notes_animal;
+  @ManyToMany(mappedBy = "animalsNote", fetch = FetchType.EAGER)
+  private Set<Note> notesAnimal;
 
-  @ManyToOne()
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
-  private User users_animal;
+  @EqualsAndHashCode.Exclude
+  private User usersAnimal;
 
   public Animal(Long id, String animalName, City city, String snapshot, String description, Gender gender,
       LocalDateTime dateOfBirth) {

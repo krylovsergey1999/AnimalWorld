@@ -8,25 +8,36 @@ import org.springframework.stereotype.Service;
 import ru.animal.world.dto.AnimalDto;
 import ru.animal.world.entity.Animal;
 import ru.animal.world.exception.NotFoundException;
+import ru.animal.world.mapper.AnimalMapper;
+import ru.animal.world.mapper.UserMapper;
 import ru.animal.world.repository.AnimalRepository;
 import ru.animal.world.service.AnimalService;
+import ru.animal.world.service.UserService;
 
 @Service
 public class AnimalServiceImpl implements AnimalService {
 
   private final AnimalRepository animalRepository;
-  //  private Mapper<AnimalDto, Animal> animalMapper = new AnimalMapper();
-  private ru.animal.world.mapper.AnimalMapper animalMapper = new ru.animal.world.mapper.AnimalMapper();
+  private AnimalMapper animalMapper;
+  private UserMapper userMapper;
+  private UserService userService;
 
   @Autowired
-  public AnimalServiceImpl(AnimalRepository AnimalRepository) {
-    this.animalRepository = AnimalRepository;
+  public AnimalServiceImpl(AnimalRepository animalRepository, AnimalMapper mapper, UserService userService,
+      UserMapper userMapper) {
+    this.animalRepository = animalRepository;
+    this.animalMapper = mapper;
+    this.userService = userService;
+    this.userMapper = userMapper;
   }
 
   @Override
   public AnimalDto create(AnimalDto newAnimalDto) {
-    Animal result = animalRepository.save(animalMapper.dtoToEntity(newAnimalDto));
-    return animalMapper.entityToDto(result);
+    Animal entity = animalMapper.dtoToEntity(newAnimalDto);
+    entity.setUsersAnimal(userMapper.dtoToEntity(
+        userService.getById(
+            newAnimalDto.getUserId())));
+    return animalMapper.entityToDto(animalRepository.save(entity));
   }
 
   @Override

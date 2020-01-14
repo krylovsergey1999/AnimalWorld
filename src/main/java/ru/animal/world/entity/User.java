@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -70,13 +71,13 @@ public class User extends BaseEntity
   @Column(name = "last_login")
   private LocalDateTime lastLogin;
 
-  @OneToMany(mappedBy = "author_note")
+  @OneToMany(mappedBy = "authorNote", fetch = FetchType.EAGER)
   private Set<Note> notes;
 
-  @ManyToMany(mappedBy = "users_dialog")
+  @ManyToMany(mappedBy = "usersDialog", fetch = FetchType.EAGER)
   private List<Dialog> dialogs;
 
-  @OneToMany(mappedBy = "users_animal")
+  @OneToMany(mappedBy = "usersAnimal", fetch = FetchType.EAGER)
   private Set<Animal> animals;
 
   public User(Long id, String userName, String userLastName, Gender gender, LocalDateTime dateOfBirth, String email,

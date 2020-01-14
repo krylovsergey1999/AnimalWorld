@@ -30,5 +30,6 @@ public class Comment extends BaseEntity {
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "comment_id")
+  @EqualsAndHashCode.Exclude
   private Note note;
 }

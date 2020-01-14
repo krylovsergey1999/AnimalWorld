@@ -16,5 +16,5 @@ public class MessageDto extends BaseDto {
 
   private String text;
   private LocalDateTime messageTime;
-  private DialogDto dialog;
+  private Long dialogId;
 }

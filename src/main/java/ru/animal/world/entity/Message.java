@@ -30,5 +30,6 @@ public class Message extends BaseEntity {
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "message_id")
+  @EqualsAndHashCode.Exclude
   private Dialog dialog;
 }

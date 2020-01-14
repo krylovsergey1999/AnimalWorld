@@ -16,5 +16,5 @@ public class CommentDto extends BaseDto {
 
   private String commentText;
   private LocalDateTime commentTime;
-  private NoteDto note;
+  private Long noteId;
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.animal.world.dto.NoteDto;
 import ru.animal.world.entity.Note;
 import ru.animal.world.exception.NotFoundException;
+import ru.animal.world.mapper.NoteMapper;
 import ru.animal.world.repository.NoteRepository;
 import ru.animal.world.service.NoteService;
 
@@ -15,12 +16,12 @@ import ru.animal.world.service.NoteService;
 public class NoteServiceImpl implements NoteService {
 
   private final NoteRepository noteRepository;
-  //  private Mapper<NoteDto, Note> noteMapper = new NoteMapper();
-  ru.animal.world.mapper.NoteMapper noteMapper = new ru.animal.world.mapper.NoteMapper();
+  private NoteMapper noteMapper;
 
   @Autowired
-  public NoteServiceImpl(NoteRepository NoteRepository) {
-    this.noteRepository = NoteRepository;
+  public NoteServiceImpl(NoteRepository noteRepository, NoteMapper mapper) {
+    this.noteRepository = noteRepository;
+    this.noteMapper = mapper;
   }
 
   @Override

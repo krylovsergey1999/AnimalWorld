@@ -41,7 +41,8 @@ public class Note extends BaseEntity implements Serializable {
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
-  private User author_note;
+  @EqualsAndHashCode.Exclude
+  private User authorNote;
 
   @ManyToMany()
   @JoinTable(
@@ -49,7 +50,8 @@ public class Note extends BaseEntity implements Serializable {
       joinColumns = {@JoinColumn(name = "note_id")},
       inverseJoinColumns = {@JoinColumn(name = "animal_id")}
   )
-  private Set<Animal> animals_note;
+  @EqualsAndHashCode.Exclude
+  private Set<Animal> animalsNote;
 
   public Note(Long id, String noteName, String description, LocalDateTime createDate) {
     this.id = id;

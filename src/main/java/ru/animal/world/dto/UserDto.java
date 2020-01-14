@@ -1,6 +1,5 @@
 package ru.animal.world.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,9 +30,8 @@ public class UserDto extends BaseDto implements Serializable {
   private String snapshot;
   private String description;
   private Status status;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
   private LocalDateTime createdOn;
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+//  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
   private LocalDateTime lastLogin;
   private Set<NoteDto> notes;
   private List<DialogDto> dialogs;

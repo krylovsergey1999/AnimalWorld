@@ -16,7 +16,7 @@ public class DialogDto extends BaseDto {
 
   private String textBody;
   private Set<MessageDto> messages;
-  private Set<UserDto> users_dialog;
+  private Set<UserDto> usersDialog;
 
   public DialogDto(String textBody) {
     this.textBody = textBody;

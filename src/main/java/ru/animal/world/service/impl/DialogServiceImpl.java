@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.animal.world.dto.DialogDto;
 import ru.animal.world.entity.Dialog;
 import ru.animal.world.exception.NotFoundException;
+import ru.animal.world.mapper.DialogMapper;
 import ru.animal.world.repository.DialogRepository;
 import ru.animal.world.service.DialogService;
 
@@ -15,12 +16,12 @@ import ru.animal.world.service.DialogService;
 public class DialogServiceImpl implements DialogService {
 
   private final DialogRepository dialogRepository;
-  //  private Mapper<DialogDto, Dialog> dialogMapper = new DialogMapper();
-  private ru.animal.world.mapper.DialogMapper dialogMapper = new ru.animal.world.mapper.DialogMapper();
+  private DialogMapper dialogMapper;
 
   @Autowired
-  public DialogServiceImpl(DialogRepository DialogRepository) {
-    this.dialogRepository = DialogRepository;
+  public DialogServiceImpl(DialogRepository dialogRepository, DialogMapper mapper) {
+    this.dialogRepository = dialogRepository;
+    this.dialogMapper = mapper;
   }
 
   @Override

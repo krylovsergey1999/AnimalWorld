@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.animal.world.dto.MessageDto;
 import ru.animal.world.entity.Message;
 import ru.animal.world.exception.NotFoundException;
+import ru.animal.world.mapper.MessageMapper;
 import ru.animal.world.repository.MessageRepository;
 import ru.animal.world.service.MessageService;
 
@@ -15,12 +16,12 @@ import ru.animal.world.service.MessageService;
 public class MessageServiceImpl implements MessageService {
 
   private final MessageRepository messageRepository;
-  //  private Mapper<MessageDto, Message> messageMapper = new MessageMapper();
-  private ru.animal.world.mapper.MessageMapper messageMapper = new ru.animal.world.mapper.MessageMapper();
+  private MessageMapper messageMapper;
 
   @Autowired
-  public MessageServiceImpl(MessageRepository MessageRepository) {
-    this.messageRepository = MessageRepository;
+  public MessageServiceImpl(MessageRepository messageRepository, MessageMapper mapper) {
+    this.messageRepository = messageRepository;
+    this.messageMapper = mapper;
   }
 
   @Override

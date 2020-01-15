@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class InitDB {
 
-  // TODO
+  // TODO Илья
   CommandLineRunner initDataBase() {
     return args -> {
       log.info("");

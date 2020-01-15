@@ -34,7 +34,7 @@ import ru.animal.world.repository.NoteRepository;
 import ru.animal.world.repository.UserRepository;
 import ru.animal.world.service.UserService;
 
-
+//TODO Илья
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class UserServiceImplTest {
@@ -84,7 +84,6 @@ class UserServiceImplTest {
   @Test
   void getById() {
     System.out.println("до:  userDto1 id = " + userDto1.getId());
-    // TODO  null pointer WTF???
     System.out.println(userService.getById(user1.getId()).toString());
   }
 

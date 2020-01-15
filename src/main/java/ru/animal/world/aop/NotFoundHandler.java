@@ -25,7 +25,9 @@ public class NotFoundHandler extends ResponseEntityExceptionHandler {
                 request.getDescription(false)), HttpStatus.NOT_FOUND);
     }
 
-    //Например для http://localhost:8080/animals/export/pdf , там есть DocumentException, он его обработает.
+    /**
+     * Обратботка 500 ошибок.
+     */
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request) {
 
@@ -35,14 +37,18 @@ public class NotFoundHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
+    /**
+     * есть такой тип ошибок при запросе(например в случае при users/qwe вместо users/123, звучит примерно так "MethodArgumentTypeMismatchException ... cannot parse String to Integer"
+     */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<Object> handleMethodArgument(MethodArgumentTypeMismatchException ex, WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(Instant.now(), ex.getMessage(), request.getDescription(false));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exceptionResponse);
     }
 
-    //для не существующих адресов
+    /**
+     * Обработчик запросов на не существующие URL.
+     */
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
                                                                    HttpStatus status, WebRequest request) {
@@ -73,11 +79,5 @@ public class NotFoundHandler extends ResponseEntityExceptionHandler {
         private Instant timestamp;
         private String message;
         private String details;
-    }
-
-    @Data
-    @AllArgsConstructor
-    private static class ErrorResponse {
-        //TODO
     }
 }

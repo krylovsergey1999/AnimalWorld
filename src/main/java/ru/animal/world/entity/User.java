@@ -1,14 +1,5 @@
 package ru.animal.world.entity;
 
-import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,13 +8,19 @@ import ru.animal.world.utils.City;
 import ru.animal.world.utils.Gender;
 import ru.animal.world.utils.Status;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
+
 @Data
 @Builder
 @Entity
 @Table(name = "usr")
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +45,7 @@ public class User {
   @Column(name = "password", nullable = false)
   private String password;
 
-  @Column(name = "city")
+  @Column(name = "city", nullable = false)
   @Enumerated(EnumType.STRING)
   private City city;
 
@@ -67,4 +64,10 @@ public class User {
 
   @Column(name = "last_login")
   private LocalDateTime lastLogin;
+
+  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+  private Set<Note> notes;
+
+  @ManyToMany(mappedBy = "users")
+  private List<Dialog> dialogs;
 }

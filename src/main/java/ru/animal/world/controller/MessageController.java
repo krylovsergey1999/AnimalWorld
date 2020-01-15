@@ -14,35 +14,35 @@ import ru.animal.world.service.MessageService;
 @RequestMapping(value = "/messages")
 public class MessageController implements AbstractController<MessageDto> {
 
-  private MessageService MessageService;
+  private MessageService messageService;
 
   @Autowired
-  public MessageController(MessageService MessageService) {
-    this.MessageService = MessageService;
+  public MessageController(MessageService messageService) {
+    this.messageService = messageService;
   }
 
   @Override
   public ResponseEntity<MessageDto> create(MessageDto newMessageRequest) {
-    return ResponseEntity.status(HttpStatus.CREATED).body(MessageService.create(newMessageRequest));
+    return ResponseEntity.status(HttpStatus.CREATED).body(messageService.create(newMessageRequest));
   }
 
   @Override
   public ResponseEntity<MessageDto> getById(Long id) {
-    return ResponseEntity.ok(MessageService.getById(id));
+    return ResponseEntity.ok(messageService.getById(id));
   }
 
   @Override
   public ResponseEntity<Collection<MessageDto>> getAll() {
-    return ResponseEntity.ok(MessageService.getAll());
+    return ResponseEntity.ok(messageService.getAll());
   }
 
   @Override
   public ResponseEntity<MessageDto> update(MessageDto updatedMessageRequest, Long id) {
-    return ResponseEntity.accepted().body(MessageService.update(updatedMessageRequest, id));
+    return ResponseEntity.accepted().body(messageService.update(updatedMessageRequest, id));
   }
 
   @Override
   public ResponseEntity<Boolean> delete(Long id) {
-    return ResponseEntity.ok().body(MessageService.delete(id));
+    return ResponseEntity.ok().body(messageService.delete(id));
   }
 }

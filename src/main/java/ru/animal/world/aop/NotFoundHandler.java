@@ -48,6 +48,7 @@ public class NotFoundHandler extends ResponseEntityExceptionHandler {
 
     /**
      * Обработчик запросов на не существующие URL.
+     * В application.yml добавлен проперти для работы метода.
      */
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,

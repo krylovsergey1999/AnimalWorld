@@ -4,27 +4,33 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.*;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import ru.animal.world.utils.City;
 import ru.animal.world.utils.Gender;
 import ru.animal.world.utils.Status;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
+@SuperBuilder
 @Entity
 @Table(name = "usr")
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
+public class User extends BaseEntity
+    implements Serializable {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long userId;
 
   @Column(name = "user_name", nullable = false)
   private String userName;
@@ -59,15 +65,37 @@ public class User implements Serializable {
   @Enumerated(EnumType.STRING)
   private Status status;
 
-  @Column(name = "created_on", nullable = false)
+  @Column(name = "created_on", nullable = false, updatable = false)
   private LocalDateTime createdOn;
 
   @Column(name = "last_login")
   private LocalDateTime lastLogin;
 
-  @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "authorNote", fetch = FetchType.EAGER)
   private Set<Note> notes;
 
-  @ManyToMany(mappedBy = "users")
+  @ManyToMany(mappedBy = "usersDialog", fetch = FetchType.EAGER)
   private List<Dialog> dialogs;
+
+  @OneToMany(mappedBy = "usersAnimal", fetch = FetchType.EAGER)
+  private Set<Animal> animals;
+
+  public User(Long id, String userName, String userLastName, Gender gender, LocalDateTime dateOfBirth, String email,
+      String password, City city, String snapshot, String description, Status status, LocalDateTime createdOn,
+      LocalDateTime lastLogin) {
+    this.id = id;
+    this.userName = userName;
+    this.userLastName = userLastName;
+    this.gender = gender;
+    this.dateOfBirth = dateOfBirth;
+    this.email = email;
+    this.password = password;
+    this.city = city;
+    this.snapshot = snapshot;
+    this.description = description;
+    this.status = status;
+    this.snapshot = snapshot;
+    this.createdOn = createdOn;
+    this.lastLogin = lastLogin;
+  }
 }

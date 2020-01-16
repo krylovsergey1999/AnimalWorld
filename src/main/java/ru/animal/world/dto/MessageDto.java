@@ -1,15 +1,20 @@
 package ru.animal.world.dto;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class MessageDto implements BaseDto {
+public class MessageDto extends BaseDto {
 
-  private Long messageId;
+  private String text;
+  private LocalDateTime messageTime;
+  private Long dialogId;
 }

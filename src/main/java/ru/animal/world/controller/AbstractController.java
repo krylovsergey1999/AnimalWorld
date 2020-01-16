@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+// http://localhost:8080/users
 public interface AbstractController<DTO> {
 
-  @PostMapping
+  @PostMapping("/create")
   ResponseEntity<DTO> create(@RequestBody DTO newInstanceRequest);
 
   @GetMapping("/{id}")

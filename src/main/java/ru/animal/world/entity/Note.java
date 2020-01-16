@@ -1,27 +1,31 @@
 package ru.animal.world.entity;
 
-import javax.persistence.*;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
+@SuperBuilder
 @Entity
 @Table(name = "note")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Note implements Serializable {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long noteId;
+public class Note extends BaseEntity implements Serializable {
 
   @Column(name = "note_name", nullable = false)
   private String noteName;
@@ -36,15 +40,23 @@ public class Note implements Serializable {
   private Set<Comment> comments;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "notes")
-  private User author;
+  @JoinColumn(name = "user_id")
+  @EqualsAndHashCode.Exclude
+  private User authorNote;
 
   @ManyToMany()
   @JoinTable(
-          name = "Animal_note",
-          joinColumns = { @JoinColumn(name = "note_id") },
-          inverseJoinColumns = { @JoinColumn(name = "animal_id") }
+      name = "animal_note",
+      joinColumns = {@JoinColumn(name = "note_id")},
+      inverseJoinColumns = {@JoinColumn(name = "animal_id")}
   )
-  private Set<Animal> animals;
+  @EqualsAndHashCode.Exclude
+  private Set<Animal> animalsNote;
 
+  public Note(Long id, String noteName, String description, LocalDateTime createDate) {
+    this.id = id;
+    this.noteName = noteName;
+    this.description = description;
+    this.createDate = createDate;
+  }
 }

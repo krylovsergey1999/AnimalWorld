@@ -13,10 +13,13 @@ public class MapperConfig {
   public ModelMapper modelMapper() {
     ModelMapper modelMapper = new ModelMapper();
     modelMapper.getConfiguration()
+        // стратегия сопоставления полей (строгий: поля все строго последовательно и одинаковы в названии)
         .setMatchingStrategy(MatchingStrategies.STRICT)
+        // сопостовление полей включить, сопоставлять поля приватные
         .setFieldMatchingEnabled(true)
-        .setSkipNullEnabled(true)
-        .setFieldAccessLevel(AccessLevel.PRIVATE);
+        .setFieldAccessLevel(AccessLevel.PRIVATE)
+        // пропускает поле, если оно null
+        .setSkipNullEnabled(true);
     return modelMapper;
   }
 }

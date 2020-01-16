@@ -38,7 +38,7 @@ public class UserController implements AbstractController<UserDto> {
 
   @Override
   public ResponseEntity<UserDto> update(UserDto updatedDtoRequest, Long id) {
-    return ResponseEntity.accepted().body(userService.update(updatedDtoRequest, id));
+    return ResponseEntity.ok().body(userService.update(updatedDtoRequest, id));
   }
 
   @Override

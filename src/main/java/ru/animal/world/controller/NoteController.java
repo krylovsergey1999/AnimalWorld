@@ -38,7 +38,7 @@ public class NoteController implements AbstractController<NoteDto> {
 
   @Override
   public ResponseEntity<NoteDto> update(NoteDto updatedNoteRequest, Long id) {
-    return ResponseEntity.accepted().body(noteService.update(updatedNoteRequest, id));
+    return ResponseEntity.ok().body(noteService.update(updatedNoteRequest, id));
   }
 
   @Override

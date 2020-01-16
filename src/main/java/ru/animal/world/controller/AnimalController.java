@@ -38,7 +38,7 @@ public class AnimalController implements AbstractController<AnimalDto> {
 
   @Override
   public ResponseEntity<AnimalDto> update(AnimalDto updatedDtoRequest, Long id) {
-    return ResponseEntity.accepted().body(animalService.update(updatedDtoRequest, id));
+    return ResponseEntity.ok().body(animalService.update(updatedDtoRequest, id));
   }
 
   @Override

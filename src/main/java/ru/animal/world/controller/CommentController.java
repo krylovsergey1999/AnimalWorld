@@ -38,7 +38,7 @@ public class CommentController implements AbstractController<CommentDto> {
 
   @Override
   public ResponseEntity<CommentDto> update(CommentDto updatedCommentRequest, Long id) {
-    return ResponseEntity.accepted().body(commentService.update(updatedCommentRequest, id));
+    return ResponseEntity.ok().body(commentService.update(updatedCommentRequest, id));
   }
 
   @Override

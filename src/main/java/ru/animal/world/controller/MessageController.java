@@ -38,7 +38,7 @@ public class MessageController implements AbstractController<MessageDto> {
 
   @Override
   public ResponseEntity<MessageDto> update(MessageDto updatedMessageRequest, Long id) {
-    return ResponseEntity.accepted().body(messageService.update(updatedMessageRequest, id));
+    return ResponseEntity.ok().body(messageService.update(updatedMessageRequest, id));
   }
 
   @Override

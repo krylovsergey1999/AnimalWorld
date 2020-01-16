@@ -37,7 +37,7 @@ public class DialogController implements AbstractController<DialogDto> {
 
   @Override
   public ResponseEntity<DialogDto> update(DialogDto updatedDialogRequest, Long id) {
-    return ResponseEntity.accepted().body(dialogService.update(updatedDialogRequest, id));
+    return ResponseEntity.ok().body(dialogService.update(updatedDialogRequest, id));
   }
 
   @Override

@@ -1,10 +1,16 @@
 package ru.animal.world.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import ru.animal.world.dto.UserDto;
 import ru.animal.world.dto.mapper.Mapper;
 import ru.animal.world.dto.mapper.UserMapper;
@@ -12,20 +18,32 @@ import ru.animal.world.entity.User;
 import ru.animal.world.exception.NotFoundException;
 import ru.animal.world.repository.UserRepository;
 import ru.animal.world.service.UserService;
+import ru.animal.world.utils.Role;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+  private final PasswordEncoder passwordEncoder;
   private final UserRepository userRepository;
   private Mapper<UserDto, User> userMapper = new UserMapper();
 
   @Autowired
-  public UserServiceImpl(UserRepository userRepository) {
+  public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    this.passwordEncoder = passwordEncoder;
     this.userRepository = userRepository;
   }
 
   @Override
   public UserDto create(UserDto newUserDto) {
+    boolean isConfirm = newUserDto.getPassword() != null && newUserDto.getPassword().equals(newUserDto.getPasswordConfirm());
+    User userByEmail = userRepository.findByEmail(newUserDto.getEmail());
+    if (!isConfirm || StringUtils.isEmpty(newUserDto.getEmail()) || userByEmail != null) {
+      return new UserDto();
+    }
+    newUserDto.setPassword(passwordEncoder.encode(newUserDto.getPasswordConfirm()));
+    newUserDto.setCreatedOn(LocalDateTime.now());
+    newUserDto.setActive(true);
+    newUserDto.setRoles(Collections.singleton(Role.USER));
     User result = userRepository.save(userMapper.dtoToEntity(newUserDto));
     return userMapper.entityToDto(result);
   }
@@ -46,8 +64,11 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserDto update(UserDto updateUserDto, Long id) {
     return userRepository.findById(id).map(userInDB -> {
-      if (updateUserDto.getUserName() != null) {
-        userInDB.setUserName(updateUserDto.getUserName());
+      if (updateUserDto.getUsername() != null) {
+        userInDB.setUsername(updateUserDto.getUsername());
+      }
+      if (updateUserDto.getUserFirstName() != null) {
+        userInDB.setUsername(updateUserDto.getUsername());
       }
       if (updateUserDto.getUserLastName() != null) {
         userInDB.setUserLastName(updateUserDto.getUserLastName());
@@ -93,5 +114,13 @@ public class UserServiceImpl implements UserService {
     } catch (EmptyResultDataAccessException e) {
       throw new NotFoundException(User.class.getSimpleName());
     }
+  }
+
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    if (username == null || StringUtils.isEmpty(username)) {
+      throw new UsernameNotFoundException("UserName not found");
+    }
+    return userRepository.findByUsername(username);
   }
 }

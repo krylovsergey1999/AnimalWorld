@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+</head>
+<body>
+<header>
+    <h1>Animal world</h1>
+</header>
+<article>
+    <h3>Welcome</h3>
+</article>
+<footer>
+    <form action="/logout" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <input type="submit" value="Log out" />
+</form>
+</footer>
+</body>
+</html>

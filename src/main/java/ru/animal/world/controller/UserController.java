@@ -23,6 +23,9 @@ public class UserController implements AbstractController<UserDto> {
 
   @Override
   public ResponseEntity<UserDto> create(UserDto newUserDtoRequest) {
+    if (newUserDtoRequest == null) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
     return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(newUserDtoRequest));
   }
 
@@ -33,7 +36,11 @@ public class UserController implements AbstractController<UserDto> {
 
   @Override
   public ResponseEntity<Collection<UserDto>> getAll() {
-    return ResponseEntity.ok(userService.getAll());
+    Collection<UserDto> users = userService.getAll();
+    if (users == null) {
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(users);
   }
 
   @Override

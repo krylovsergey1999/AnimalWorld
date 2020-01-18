@@ -3,15 +3,8 @@ package ru.animal.world.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,11 +30,6 @@ public class Animal implements Serializable {
   @Column(name = "city")
   @Enumerated(EnumType.STRING)
   private City city;
-
-//  @Column(name = "city_id")
-//  @ElementCollection(targetClass = City.class)
-//  @CollectionTable(name = "tbl_animal_cities", joinColumns = @JoinColumn(name = "animal_id"))
-//  private Set<City> cities;
 
   @Column(name = "snapshot")
   private String snapshot;

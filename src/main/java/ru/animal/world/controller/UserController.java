@@ -10,7 +10,7 @@ import ru.animal.world.dto.UserDto;
 import ru.animal.world.service.UserService;
 
 @RestController
-@RequestMapping(value = "/users")   // http://localhost:8080/users
+@RequestMapping(value = "/users")
 public class UserController implements AbstractController<UserDto> {
 
   private UserService userService;
@@ -29,7 +29,7 @@ public class UserController implements AbstractController<UserDto> {
     return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(newUserDtoRequest));
   }
 
-  @Override   // http://localhost:8080/users{id}
+  @Override
   public ResponseEntity<UserDto> getById(Long id) {
     return ResponseEntity.ok(userService.getById(id));
   }
@@ -45,7 +45,7 @@ public class UserController implements AbstractController<UserDto> {
 
   @Override
   public ResponseEntity<UserDto> update(UserDto updatedDtoRequest, Long id) {
-    return ResponseEntity.accepted().body(userService.update(updatedDtoRequest, id));
+    return ResponseEntity.ok().body(userService.update(updatedDtoRequest, id));
   }
 
   @Override

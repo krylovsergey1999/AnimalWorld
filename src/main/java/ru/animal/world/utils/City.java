@@ -2,6 +2,7 @@ package ru.animal.world.utils;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ public enum City {
 
   @Getter
   @Setter
+  @JsonValue
   private String name;
 
   @Getter
@@ -32,4 +34,9 @@ public enum City {
     }
     return null;
   }
+
+  /*@Override
+  public String toString() {
+    return getName();
+  }*/
 }

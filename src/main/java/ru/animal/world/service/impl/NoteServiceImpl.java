@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.animal.world.dto.NoteDto;
-import ru.animal.world.dto.mapper.Mapper;
-import ru.animal.world.dto.mapper.NoteMapper;
 import ru.animal.world.entity.Note;
 import ru.animal.world.exception.NotFoundException;
+import ru.animal.world.mapper.NoteMapper;
 import ru.animal.world.repository.NoteRepository;
 import ru.animal.world.service.NoteService;
 
@@ -17,13 +16,15 @@ import ru.animal.world.service.NoteService;
 public class NoteServiceImpl implements NoteService {
 
   private final NoteRepository noteRepository;
-  private Mapper<NoteDto, Note> noteMapper = new NoteMapper();
+  private NoteMapper noteMapper;
 
   @Autowired
-  public NoteServiceImpl(NoteRepository NoteRepository) {
-    this.noteRepository = NoteRepository;
+  public NoteServiceImpl(NoteRepository noteRepository, NoteMapper mapper) {
+    this.noteRepository = noteRepository;
+    this.noteMapper = mapper;
   }
 
+  // TODO
   @Override
   public NoteDto create(NoteDto newNoteDto) {
     Note result = noteRepository.save(noteMapper.dtoToEntity(newNoteDto));
@@ -45,10 +46,10 @@ public class NoteServiceImpl implements NoteService {
 
   @Override
   public NoteDto update(NoteDto updateNoteDto, Long id) {
-    return noteRepository.findById(id).map(NoteInDB -> {
-      // Todo после обновления всех сущностей
-      return noteMapper.entityToDto(noteRepository.saveAndFlush(NoteInDB));
-    }).orElseThrow(() -> new NotFoundException(Note.class.getSimpleName()));
+    Note note = noteRepository.findById(id).orElseThrow(() -> new NotFoundException(Note.class.getSimpleName()));
+    note = noteMapper.dtoToEntity(updateNoteDto);
+    note.setId(id);
+    return noteMapper.entityToDto(noteRepository.saveAndFlush(note));
   }
 
   @Override

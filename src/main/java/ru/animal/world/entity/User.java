@@ -3,14 +3,16 @@ package ru.animal.world.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.animal.world.utils.City;
@@ -18,17 +20,16 @@ import ru.animal.world.utils.Gender;
 import ru.animal.world.utils.Role;
 import ru.animal.world.utils.Status;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
+@SuperBuilder
 @Entity
 @Table(name = "usr")
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable, UserDetails {
+public class User extends BaseEntity
+    implements Serializable, UserDetails {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long userId;
 
   @Column(name = "user_name", nullable = false)
   private String username;
@@ -42,11 +43,6 @@ public class User implements Serializable, UserDetails {
   @Column(name = "gender", nullable = false)
   @Enumerated(EnumType.STRING)
   private Gender gender;
-
-  @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-  @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-  @Enumerated(EnumType.STRING)
-  private Set<Role> roles;
 
   @Column(name = "date_of_birth")
   private LocalDateTime dateOfBirth;
@@ -80,15 +76,44 @@ public class User implements Serializable, UserDetails {
   @Column(name = "last_login")
   private LocalDateTime lastLogin;
 
-  @OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+  @Column(name = "role")
+  @Enumerated(EnumType.STRING)
+  private Role role;
+
+  @OneToMany(mappedBy = "authorNote", fetch = FetchType.EAGER)
   private Set<Note> notes;
 
-  @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+  @ManyToMany(mappedBy = "usersDialog", fetch = FetchType.EAGER)
   private List<Dialog> dialogs;
+
+  @OneToMany(mappedBy = "usersAnimal", fetch = FetchType.EAGER)
+  private Set<Animal> animals;
+
+  public User(Long id, String username, String userFirstName, String userLastName, Gender gender, LocalDateTime dateOfBirth, String email,
+      String password, City city, String snapshot, String description, Status status, boolean active, LocalDateTime createdOn,
+      LocalDateTime lastLogin, Role role) {
+    this.id = id;
+    this.username = username;
+    this.userFirstName = userFirstName;
+    this.userLastName = userLastName;
+    this.gender = gender;
+    this.dateOfBirth = dateOfBirth;
+    this.email = email;
+    this.password = password;
+    this.city = city;
+    this.snapshot = snapshot;
+    this.description = description;
+    this.status = status;
+    this.active = active;
+    this.snapshot = snapshot;
+    this.createdOn = createdOn;
+    this.lastLogin = lastLogin;
+    this.role = role;
+  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return getRoles();
+    return Collections.singleton(getRole());
   }
 
   @Override

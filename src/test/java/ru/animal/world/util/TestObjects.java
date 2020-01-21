@@ -11,12 +11,13 @@ import ru.animal.world.entity.Note;
 import ru.animal.world.entity.User;
 import ru.animal.world.utils.City;
 import ru.animal.world.utils.Gender;
+import ru.animal.world.utils.Role;
 import ru.animal.world.utils.Status;
 
 public class TestObjects {
 
-  public static User user1 = new User(1L, "Илья", "Булавин", Gender.MALE, LocalDateTime.now(), "123@mail.ru",
-      "пароль", City.MOSCOW, "картинка", "оооопииисаниие", Status.ONLINE, LocalDateTime.now(), LocalDateTime.now());
+  public static User user1 = new User(1L, "username", "Илья", "Булавин", Gender.MALE, LocalDateTime.now(), "123@mail.ru",
+      "пароль", City.MOSCOW, "картинка", "оооопииисаниие", Status.ONLINE, true, LocalDateTime.now(), LocalDateTime.now(), Role.USER);
 
   public static Note note1 = new Note(1L, "имя заметки1", "описание1", LocalDateTime.now());
   public static Note note2 = new Note(2L, "имя заметки2", "описание2", LocalDateTime.now());
@@ -30,8 +31,8 @@ public class TestObjects {
       "описание животного2", Gender.MALE, LocalDateTime.now());
 
 
-  public static UserDto userDto1 = new UserDto("Илья", "Булавин", Gender.MALE, LocalDateTime.now(), "123@mail.ru",
-      "пароль", City.MOSCOW, "картинка", "оооопииисаниие", Status.ONLINE, LocalDateTime.now(), LocalDateTime.now());
+  public static UserDto userDto1 = new UserDto("username", "Илья", "Булавин", Gender.MALE, LocalDateTime.now(), "123@mail.ru",
+      "пароль", City.MOSCOW, "картинка", "оооопииисаниие", Status.ONLINE, true, LocalDateTime.now(), LocalDateTime.now(), Role.USER);
 
   public static NoteDto noteDto1 = new NoteDto("имя заметки1", "описание1", LocalDateTime.now());
   public static NoteDto noteDto2 = new NoteDto("имя заметки2", "описание2", LocalDateTime.now());

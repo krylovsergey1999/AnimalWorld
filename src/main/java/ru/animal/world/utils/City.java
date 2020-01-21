@@ -34,9 +34,4 @@ public enum City {
     }
     return null;
   }
-
-  @Override
-  public String toString() {
-    return getName();
-  }
 }

@@ -10,8 +10,7 @@ import ru.animal.world.entity.BaseEntity;
 @Slf4j
 public abstract class AbstractMapper<Entity extends BaseEntity, Dto extends BaseDto> implements Mapper<Entity, Dto> {
 
-  ModelMapper modelMapper;
-
+  protected ModelMapper modelMapper;
   private Class<Entity> entityClass;
   private Class<Dto> dtoClass;
 

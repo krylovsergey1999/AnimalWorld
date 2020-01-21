@@ -3,6 +3,7 @@ package ru.animal.world.service.impl;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ import ru.animal.world.repository.UserRepository;
 import ru.animal.world.service.UserService;
 import ru.animal.world.utils.Role;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -34,16 +36,18 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserDto create(UserDto newUserDto) {
-    boolean isConfirm = newUserDto.getPassword() != null && newUserDto.getPassword().equals(newUserDto.getPasswordConfirm());
-    User userByEmail = userRepository.findByEmail(newUserDto.getEmail());
-    if (!isConfirm || StringUtils.isEmpty(newUserDto.getEmail()) || userByEmail != null) {
-      return new UserDto();
-    }
+//    boolean isConfirm = newUserDto.getPassword() != null && newUserDto.getPassword().equals(newUserDto.getPasswordConfirm());
+//    User userByEmail = userRepository.findByEmail(newUserDto.getEmail());
+//    if (!isConfirm || StringUtils.isEmpty(newUserDto.getEmail()) || userByEmail != null) {
+//      return new UserDto();
+//    }
     newUserDto.setPassword(passwordEncoder.encode(newUserDto.getPasswordConfirm()));
     newUserDto.setCreatedOn(LocalDateTime.now());
     newUserDto.setActive(true);
     newUserDto.setRole(Role.USER);
+    log.info("перед сохранением в базу: " + newUserDto);
     User result = userRepository.save(userMapper.dtoToEntity(newUserDto));
+    log.info("после сохранением в базу: {}", newUserDto);
     return userMapper.entityToDto(result);
   }
 

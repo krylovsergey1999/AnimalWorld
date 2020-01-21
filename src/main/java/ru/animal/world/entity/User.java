@@ -21,6 +21,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.animal.world.utils.City;
@@ -79,9 +81,11 @@ public class User extends BaseEntity
   @Column(name = "active")
   private Boolean active;
 
+  @CreationTimestamp
   @Column(name = "created_on", nullable = false, updatable = false)
   private LocalDateTime createdOn;
 
+  @UpdateTimestamp
   @Column(name = "last_login")
   private LocalDateTime lastLogin;
 
@@ -98,9 +102,9 @@ public class User extends BaseEntity
   @OneToMany(mappedBy = "usersAnimal", fetch = FetchType.EAGER)
   private Set<Animal> animals;
 
-  public User(Long id, String userName, String userFirstName, String userLastName, Gender gender, LocalDateTime dateOfBirth, String email,
-      String password, City city, String snapshot, String description, Status status, boolean active, LocalDateTime createdOn,
-      LocalDateTime lastLogin, Role role) {
+  public User(Long id, String userName, String userFirstName, String userLastName, Gender gender,
+      LocalDateTime dateOfBirth, String email, String password, City city, String snapshot, String description,
+      Status status, boolean active, Role role) {
     this.id = id;
     this.userName = userName;
     this.userFirstName = userFirstName;
@@ -114,8 +118,6 @@ public class User extends BaseEntity
     this.description = description;
     this.status = status;
     this.active = active;
-    this.createdOn = createdOn;
-    this.lastLogin = lastLogin;
     this.role = role;
   }
 

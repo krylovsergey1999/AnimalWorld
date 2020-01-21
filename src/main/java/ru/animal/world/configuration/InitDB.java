@@ -15,6 +15,7 @@ import ru.animal.world.service.NoteService;
 import ru.animal.world.service.UserService;
 import ru.animal.world.utils.City;
 import ru.animal.world.utils.Gender;
+import ru.animal.world.utils.Role;
 import ru.animal.world.utils.Status;
 
 @Slf4j
@@ -24,16 +25,15 @@ public class InitDB {
   @Bean
   CommandLineRunner initDataBase(AnimalService animalService, CommentService commentService,
       DialogService dialogService, MessageService messageService, NoteService noteService, UserService userService) {
-
-    UserDto userDto1 = new UserDto("Илья", "Булавин", Gender.MALE, LocalDateTime.of(1995, 11, 18, 0, 0),
-        "sam47kon@mail.ru", "password1", City.ROSTOV_ON_DON, "картинка1", "я есть конь", Status.ONLINE,
-        LocalDateTime.now(), LocalDateTime.now());
-    UserDto userDto2 = new UserDto("Сергей", "Крылов", Gender.MALE, LocalDateTime.of(1998, 11, 18, 0, 0),
-        "krylov_sergey@mail.ru", "password2", City.SAINT_PETERSBURG, "картинка2", "я есть Серега", Status.ONLINE,
-        LocalDateTime.now(), LocalDateTime.now());
-    UserDto userDto3 = new UserDto("Андрей", "Фамилия", Gender.MALE, LocalDateTime.of(1998, 10, 18, 0, 0),
-        "korzh17@mail.ru", "password3", City.MOSCOW, "картинка3", "я есть Андрюха", Status.ONLINE,
-        LocalDateTime.now(), LocalDateTime.now());
+    UserDto userDto1 = new UserDto("sam", "Илья", "Булавин", Gender.MALE, LocalDateTime.of(1995, 11, 18, 0, 0),
+        "password1", "sam47kon@mail.ru", "password1", City.ROSTOV_ON_DON, "картинка1", "я есть конь", Status.ONLINE,
+        true, Role.USER);
+    UserDto userDto2 = new UserDto("serega", "Сергей", "Крылов", Gender.MALE, LocalDateTime.of(1998, 11, 18, 0, 0),
+        "password2", "krylov_sergey@mail.ru", "password2", City.SAINT_PETERSBURG, "картинка2", "я есть Серега",
+        Status.ONLINE, true, Role.USER);
+    UserDto userDto3 = new UserDto("andrew", "Андрей", "Фамилия", Gender.MALE, LocalDateTime.of(1998, 10, 18, 0, 0),
+        "password3", "korzh17@mail.ru", "password3", City.MOSCOW, "картинка3", "я есть Андрюха", Status.ONLINE, true,
+        Role.USER);
     AnimalDto animalDto1 = new AnimalDto("Пёс", City.ROSTOV_ON_DON, "картинка_пса", "пёс есть пёс", Gender.MALE,
         LocalDateTime.of(2005, 11, 18, 0, 0));
     AnimalDto animalDto2 = new AnimalDto("Мурзик", City.SAINT_PETERSBURG, "мурзик_фото_в_купальнике",
@@ -67,8 +67,6 @@ public class InitDB {
       animalDto4.setUserId(userDto_1.getId());
       AnimalDto animalDto_4 = animalService.create(animalDto4);
       log.info("Create animal4: " + animalDto_4);
-
-
     };
   }
 }

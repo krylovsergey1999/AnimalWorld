@@ -45,33 +45,15 @@ public class UserDto extends BaseDto implements Serializable {
   private List<DialogDto> dialogs;
   private Set<AnimalDto> animals;
 
-  public UserDto(String userName, String userLastName, Gender gender, LocalDateTime dateOfBirth, String email,
-      String password, City city, String snapshot, String description, Status status, LocalDateTime createdOn,
-      LocalDateTime lastLogin) {
-    this.userName = userName;
-    this.userLastName = userLastName;
-    this.gender = gender;
-    this.dateOfBirth = dateOfBirth;
-    this.email = email;
-    this.password = password;
-    this.city = city;
-    this.snapshot = snapshot;
-    this.description = description;
-    this.status = status;
-    this.createdOn = createdOn;
-    this.lastLogin = lastLogin;
-  }
-
   public UserDto(String username, String userFirstName, String userLastName, Gender gender, LocalDateTime dateOfBirth,
-      String email,
-      String password, City city, String snapshot, String description, Status status, boolean active,
-      LocalDateTime createdOn,
-      LocalDateTime lastLogin, Role role) {
+      String passwordConfirm, String email, String password, City city, String snapshot, String description,
+      Status status, boolean active, Role role) {
     this.userName = username;
     this.userFirstName = userFirstName;
     this.userLastName = userLastName;
     this.gender = gender;
     this.dateOfBirth = dateOfBirth;
+    this.passwordConfirm = passwordConfirm;
     this.email = email;
     this.password = password;
     this.city = city;
@@ -79,9 +61,6 @@ public class UserDto extends BaseDto implements Serializable {
     this.description = description;
     this.status = status;
     this.active = active;
-    this.snapshot = snapshot;
-    this.createdOn = createdOn;
-    this.lastLogin = lastLogin;
     this.role = role;
   }
 }

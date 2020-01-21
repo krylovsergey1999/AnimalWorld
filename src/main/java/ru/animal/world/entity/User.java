@@ -6,11 +6,18 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import javax.persistence.*;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +26,7 @@ import ru.animal.world.utils.City;
 import ru.animal.world.utils.Gender;
 import ru.animal.world.utils.Role;
 import ru.animal.world.utils.Status;
+
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -32,7 +40,7 @@ public class User extends BaseEntity
 
 
   @Column(name = "user_name", nullable = false)
-  private String username;
+  private String userName;
 
   @Column(name = "user_first_name", nullable = false)
   private String userFirstName;
@@ -70,7 +78,7 @@ public class User extends BaseEntity
   @Column(name = "active")
   private Boolean active;
 
-  @Column(name = "created_on", nullable = false)
+  @Column(name = "created_on", nullable = false, updatable = false)
   private LocalDateTime createdOn;
 
   @Column(name = "last_login")
@@ -93,7 +101,7 @@ public class User extends BaseEntity
       String password, City city, String snapshot, String description, Status status, boolean active, LocalDateTime createdOn,
       LocalDateTime lastLogin, Role role) {
     this.id = id;
-    this.username = username;
+    this.userName = username;
     this.userFirstName = userFirstName;
     this.userLastName = userLastName;
     this.gender = gender;

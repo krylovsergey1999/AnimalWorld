@@ -12,13 +12,11 @@ import ru.animal.world.repository.UserRepository;
 @Component
 public class NoteMapper extends AbstractMapper<Note, NoteDto> {
 
-  private ModelMapper modelMapper;
   private UserRepository userRepository;
 
   @Autowired
-  public NoteMapper(ModelMapper modelMapper, UserRepository userRepository) {
-    super(Note.class, NoteDto.class, modelMapper);
-    this.modelMapper = modelMapper;
+  public NoteMapper(ModelMapper mapper, UserRepository userRepository) {
+    super(Note.class, NoteDto.class, mapper);
     this.userRepository = userRepository;
   }
 

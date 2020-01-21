@@ -12,14 +12,12 @@ import ru.animal.world.repository.DialogRepository;
 @Component
 public class MessageMapper extends AbstractMapper<Message, MessageDto> {
 
-  private ModelMapper modelMapper;
   private DialogRepository dialogRepository;
 
   @Autowired
-  public MessageMapper(ModelMapper modelMapper, DialogRepository dialogRepository) {
-    super(Message.class, MessageDto.class, modelMapper);
+  public MessageMapper(ModelMapper mapper, DialogRepository dialogRepository) {
+    super(Message.class, MessageDto.class, mapper);
     this.dialogRepository = dialogRepository;
-    this.modelMapper = modelMapper;
   }
 
   @PostConstruct

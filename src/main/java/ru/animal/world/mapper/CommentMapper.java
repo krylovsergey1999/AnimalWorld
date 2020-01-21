@@ -12,14 +12,12 @@ import ru.animal.world.repository.NoteRepository;
 @Component
 public class CommentMapper extends AbstractMapper<Comment, CommentDto> {
 
-  private ModelMapper modelMapper;
   private NoteRepository noteRepository;
 
   @Autowired
-  public CommentMapper(ModelMapper modelMapper, NoteRepository noteRepository) {
-    super(Comment.class, CommentDto.class, modelMapper);
+  public CommentMapper(ModelMapper mapper, NoteRepository noteRepository) {
+    super(Comment.class, CommentDto.class, mapper);
     this.noteRepository = noteRepository;
-    this.modelMapper = modelMapper;
   }
 
   @PostConstruct

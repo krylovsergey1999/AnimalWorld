@@ -5,9 +5,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
+// http://localhost:8080/users
 public interface AbstractController<DTO> {
 
-  @PostMapping
+  @PostMapping("/create")
   ResponseEntity<DTO> create(@RequestBody DTO newInstanceRequest);
 
   @GetMapping("/{id}")

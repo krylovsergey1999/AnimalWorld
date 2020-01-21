@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.animal.world.dto.MessageDto;
-import ru.animal.world.dto.mapper.Mapper;
-import ru.animal.world.dto.mapper.MessageMapper;
 import ru.animal.world.entity.Message;
 import ru.animal.world.exception.NotFoundException;
+import ru.animal.world.mapper.MessageMapper;
 import ru.animal.world.repository.MessageRepository;
 import ru.animal.world.service.MessageService;
 
@@ -17,13 +16,15 @@ import ru.animal.world.service.MessageService;
 public class MessageServiceImpl implements MessageService {
 
   private final MessageRepository messageRepository;
-  private Mapper<MessageDto, Message> messageMapper = new MessageMapper();
+  private MessageMapper messageMapper;
 
   @Autowired
-  public MessageServiceImpl(MessageRepository MessageRepository) {
-    this.messageRepository = MessageRepository;
+  public MessageServiceImpl(MessageRepository messageRepository, MessageMapper mapper) {
+    this.messageRepository = messageRepository;
+    this.messageMapper = mapper;
   }
 
+  // TODO
   @Override
   public MessageDto create(MessageDto newMessageDto) {
     Message result = messageRepository.save(messageMapper.dtoToEntity(newMessageDto));
@@ -43,12 +44,14 @@ public class MessageServiceImpl implements MessageService {
         .collect(Collectors.toList());
   }
 
+  // TODO
   @Override
   public MessageDto update(MessageDto updateMessageDto, Long id) {
-    return messageRepository.findById(id).map(MessageInDB -> {
-      // Todo после обновления всех сущностей
-      return messageMapper.entityToDto(messageRepository.saveAndFlush(MessageInDB));
-    }).orElseThrow(() -> new NotFoundException(Message.class.getSimpleName()));
+    Message message = messageRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException(Message.class.getSimpleName()));
+    message = messageMapper.dtoToEntity(updateMessageDto);
+    message.setId(id);
+    return messageMapper.entityToDto(messageRepository.saveAndFlush(message));
   }
 
   @Override

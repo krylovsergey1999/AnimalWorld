@@ -6,7 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.animal.world.dto.AnimalDto;
-import ru.animal.world.dto.NoteDto;
 import ru.animal.world.dto.UserDto;
 import ru.animal.world.service.AnimalService;
 import ru.animal.world.service.CommentService;

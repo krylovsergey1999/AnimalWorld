@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,7 +39,7 @@ import ru.animal.world.utils.Status;
 public class User extends BaseEntity
     implements Serializable, UserDetails {
 
-
+  @Getter(AccessLevel.NONE)
   @Column(name = "user_name", nullable = false)
   private String userName;
 
@@ -97,11 +98,11 @@ public class User extends BaseEntity
   @OneToMany(mappedBy = "usersAnimal", fetch = FetchType.EAGER)
   private Set<Animal> animals;
 
-  public User(Long id, String username, String userFirstName, String userLastName, Gender gender, LocalDateTime dateOfBirth, String email,
+  public User(Long id, String userName, String userFirstName, String userLastName, Gender gender, LocalDateTime dateOfBirth, String email,
       String password, City city, String snapshot, String description, Status status, boolean active, LocalDateTime createdOn,
       LocalDateTime lastLogin, Role role) {
     this.id = id;
-    this.userName = username;
+    this.userName = userName;
     this.userFirstName = userFirstName;
     this.userLastName = userLastName;
     this.gender = gender;
@@ -113,10 +114,14 @@ public class User extends BaseEntity
     this.description = description;
     this.status = status;
     this.active = active;
-    this.snapshot = snapshot;
     this.createdOn = createdOn;
     this.lastLogin = lastLogin;
     this.role = role;
+  }
+
+  @Override
+  public String getUsername() {
+    return userName;
   }
 
   @Override

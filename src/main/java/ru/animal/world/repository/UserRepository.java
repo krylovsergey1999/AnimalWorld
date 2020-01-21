@@ -6,7 +6,7 @@ import ru.animal.world.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    UserDetails findByUsername(String username);
+    UserDetails findByUserName(String username);
 
     User findByEmail(String email);
 }

@@ -2,7 +2,6 @@ package ru.animal.world.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -84,6 +83,6 @@ public class UserServiceImpl implements UserService {
     if (username == null || StringUtils.isEmpty(username)) {
       throw new UsernameNotFoundException("UserName not found");
     }
-    return userRepository.findByUsername(username);
+    return userRepository.findByUserName(username);
   }
 }

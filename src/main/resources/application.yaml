@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/animal
+    url: jdbc:postgresql://localhost:5432/AnimalWorld
     username: postgres
-    password: 1234
+    password: 4747
   jpa:
     hibernate:
       ddl-auto: create

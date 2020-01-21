@@ -32,7 +32,7 @@
             <property name="format" value="^[a-z]+(\.[a-z0-9]*)*$"/>
         </module>
         <module name="ParameterNumber">
-            <property name="max" value="15"/>
+            <property name="max" value="20"/>
         </module>
         <module name="StaticVariableName"/>
         <module name="TypeName"/>

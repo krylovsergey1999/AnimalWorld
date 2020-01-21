@@ -32,7 +32,7 @@ public class RegistrationController {
     @PostMapping("registration")
     public ModelAndView addUser(@ModelAttribute("request") UserDto userDto) {
         UserDto userDtoView = userService.create(userDto);
-        return userDtoView.getId() == null ? new ModelAndView("redirect:/registration") :
-                                                 new ModelAndView("redirect:/login");
+        return userDtoView.getId() == null ? new ModelAndView("redirect:/registration")
+            : new ModelAndView("redirect:/login");
     }
 }

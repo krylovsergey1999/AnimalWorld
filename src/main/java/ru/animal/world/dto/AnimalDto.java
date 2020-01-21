@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import ru.animal.world.utils.City;
 import ru.animal.world.utils.Gender;
@@ -15,6 +16,7 @@ import ru.animal.world.utils.Gender;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(callSuper = true)
 public class AnimalDto extends BaseDto {
 
   private String animalName;

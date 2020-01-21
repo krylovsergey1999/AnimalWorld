@@ -32,8 +32,9 @@ public class Animal extends BaseEntity implements Serializable {
   @Column(name = "animal_name", nullable = false)
   private String animalName;
 
-  @Column(name = "breed")
-  private String breed;
+  // TODO
+//  @Column(name = "breed")
+//  private String breed;
 
   @Column(name = "city")
   @Enumerated(EnumType.STRING)

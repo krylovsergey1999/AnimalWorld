@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import ru.animal.world.utils.City;
 import ru.animal.world.utils.Gender;
@@ -18,6 +19,7 @@ import ru.animal.world.utils.Status;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(callSuper = true)
 public class UserDto extends BaseDto implements Serializable {
 
   private String userName;
@@ -50,7 +52,6 @@ public class UserDto extends BaseDto implements Serializable {
     this.snapshot = snapshot;
     this.description = description;
     this.status = status;
-    this.snapshot = snapshot;
     this.createdOn = createdOn;
     this.lastLogin = lastLogin;
   }

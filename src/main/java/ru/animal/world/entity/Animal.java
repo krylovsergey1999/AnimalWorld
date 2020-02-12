@@ -3,16 +3,10 @@ package ru.animal.world.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -32,8 +26,9 @@ public class Animal extends BaseEntity implements Serializable {
   @Column(name = "animal_name", nullable = false)
   private String animalName;
 
-  @Column(name = "breed")
-  private String breed;
+  // TODO
+//  @Column(name = "breed")
+//  private String breed;
 
   @Column(name = "city")
   @Enumerated(EnumType.STRING)

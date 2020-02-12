@@ -36,7 +36,7 @@ public class AnimalServiceImpl implements AnimalService {
     Animal entity = animalMapper.dtoToEntity(newAnimalDto);
     entity.setUsersAnimal(userMapper.dtoToEntity(
         userService.getById(
-            newAnimalDto.getUserId())));
+            entity.getUsersAnimal().getId())));
     return animalMapper.entityToDto(animalRepository.save(entity));
   }
 

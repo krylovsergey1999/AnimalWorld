@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/AnimalWorld
+    url: jdbc:postgresql://localhost:5432/animal
     username: postgres
-    password: 4747
+    password: 1208
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -12,7 +12,7 @@ spring:
           lob:
             non_contextual_creation: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
-    show-sql: true
+    show-sql: false
   mvc:
     throw-exception-if-no-handler-found: true
   resources:

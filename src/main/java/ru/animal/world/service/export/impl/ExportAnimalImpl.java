@@ -43,7 +43,7 @@ public class ExportAnimalImpl implements ExportAnimalService {
             for (AnimalDto dto : data) {
                 PdfPCell cell;
 
-                cell = new PdfPCell(new Phrase(dto.getAnimalId().toString()));
+                cell = new PdfPCell(new Phrase(1));
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell.setHorizontalAlignment(Element.ALIGN_CENTER);
                 table.addCell(cell);

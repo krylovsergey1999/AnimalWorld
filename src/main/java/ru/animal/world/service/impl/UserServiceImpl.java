@@ -45,9 +45,9 @@ public class UserServiceImpl implements UserService {
     newUserDto.setCreatedOn(LocalDateTime.now());
     newUserDto.setActive(true);
     newUserDto.setRole(Role.USER);
-    log.info("перед сохранением в базу: " + newUserDto);
+    log.info("Before create user : {}", newUserDto);
     User result = userRepository.save(userMapper.dtoToEntity(newUserDto));
-    log.info("после сохранением в базу: {}", newUserDto);
+    log.info("After create user: {}", result);
     return userMapper.entityToDto(result);
   }
 
@@ -87,6 +87,7 @@ public class UserServiceImpl implements UserService {
     if (username == null || StringUtils.isEmpty(username)) {
       throw new UsernameNotFoundException("UserName not found");
     }
-    return userRepository.findByUserName(username);
+    UserDetails resultUser = userRepository.findByUserName(username);
+    return resultUser;
   }
 }

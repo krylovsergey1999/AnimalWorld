@@ -28,8 +28,8 @@ public class InitDB {
     UserDto userDto1 = new UserDto("sam", "Илья", "Булавин", Gender.MALE, LocalDateTime.of(1995, 11, 18, 0, 0),
         "password1", "sam47kon@mail.ru", "password1", City.ROSTOV_ON_DON, "картинка1", "я есть конь", Status.ONLINE,
         true, Role.USER);
-    UserDto userDto2 = new UserDto("serega", "Сергей", "Крылов", Gender.MALE, LocalDateTime.of(1998, 11, 18, 0, 0),
-        "password2", "krylov_sergey@mail.ru", "password2", City.SAINT_PETERSBURG, "картинка2", "я есть Серега",
+    UserDto userDto2 = new UserDto("sergey", "Сергей", "Крылов", Gender.MALE, LocalDateTime.of(1998, 11, 18, 0, 0),
+        "pass", "krylov_sergey@mail.ru", "pass", City.SAINT_PETERSBURG, "картинка2", "я есть Серега",
         Status.ONLINE, true, Role.USER);
     UserDto userDto3 = new UserDto("andrew", "Андрей", "Фамилия", Gender.MALE, LocalDateTime.of(1998, 10, 18, 0, 0),
         "password3", "korzh17@mail.ru", "password3", City.MOSCOW, "картинка3", "я есть Андрюха", Status.ONLINE, true,
